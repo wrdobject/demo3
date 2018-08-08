@@ -38,7 +38,7 @@ public class OrganizationController {
                                       @RequestParam int stateCd,
                                       @RequestParam int cityCd,
                                       @RequestParam String ofcNm,
-                                      @RequestParam(required = false) int ofcCode,
+                                      @RequestParam(required = false,defaultValue = "0") int ofcCode,
                                       @RequestParam(required = false) String ofcType,
                                       @RequestParam(required = false) String ofcGrd,
                                       @RequestParam(required = false) String fstCntctPersId,
