@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo3.Mapper.FlightsMapper">
+    <select id="selectAll" resultType="Flights" parameterType="Flights">
+        SELECT id,flight_code,flight_date,airline,flights.type,take_airport_id,landing_airport_id FROM flights WHERE flight_code LIKE '%${flight_code}%' AND airline LIKE CONCAT('%',#{airline},'%')
+    </select>
+    <insert id="Insert" parameterType="Flights">
+        INSERT INTO skill.flights
+	(
+	flight_code,
+	flight_date,
+	airline,
+	flights.type,
+	take_airport_id,
+	landing_airport_id
+	)
+	VALUES
+	(
+	#{flight_code},
+	#{flight_date},
+	#{airline},
+	#{type},
+	#{take_airport_id},
+	#{landing_airport_id}
+	)
+    </insert>
+	<delete id="Delete" parameterType="Flights">
+		  DELETE FROM flights WHERE id=#{id}
+	</delete>
+	<update id="Update" parameterType="Flights">
+		UPDATE skill.flights
+		<trim prefix="set" suffixOverrides="," >
+			<if test="flight_code != null">
+				flight_code = #{flight_code} ,
+			</if>
+			<if test="airline != null">
+				airline = #{airline} ,
+			</if>
+			<if test="type != null">
+				flights.type = #{type} ,
+			</if>
+			<if test="take_airport_id > 0">
+				take_airport_id = #{take_airport_id} ,
+			</if>
+			<if test="landing_airport_id > 0">
+				landing_airport_id = #{landing_airport_id} ,
+			</if>
+		</trim>
+		WHERE id = #{id}
+	</update>
+</mapper>
