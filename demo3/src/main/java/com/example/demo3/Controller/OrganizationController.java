@@ -92,4 +92,19 @@ public class OrganizationController {
         }
         return object;
     }
+    @ApiOperation(value = "删除机构",notes = "删除机构根据机构id删除",httpMethod = "POST",produces = MediaType.ALL_VALUE)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "ofcId",value = "上级机构id",required = true,dataType = "int")
+    })
+    @PostMapping("/Delect_Organization/{ofcId}")
+    public Object Delect_Organization(@PathVariable int ofcId ){
+        Object object="";
+        int row=1;
+        if(row>0){
+            object="{\"flag\":\"删除成功\"}";
+        }else{
+            object="{\"flag\":\"删除失败\"}";
+        }
+        return object;
+    }
 }
