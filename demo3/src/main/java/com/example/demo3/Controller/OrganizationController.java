@@ -38,7 +38,7 @@ public class OrganizationController {
                                       @RequestParam int stateCd,
                                       @RequestParam int cityCd,
                                       @RequestParam String ofcNm,
-                                      @RequestParam(required = false) int ofcCode,
+                                      @RequestParam(required = false,defaultValue = "0") int ofcCode,
                                       @RequestParam(required = false) String ofcType,
                                       @RequestParam(required = false) String ofcGrd,
                                       @RequestParam(required = false) String fstCntctPersId,
@@ -89,6 +89,21 @@ public class OrganizationController {
             object="{\"flag\":\"查询结果显示\"}";
         }else{
             object="{\"flag\":\"查询失败\"}";
+        }
+        return object;
+    }
+    @ApiOperation(value = "删除机构",notes = "删除机构根据机构id删除",httpMethod = "POST",produces = MediaType.ALL_VALUE)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "ofcId",value = "上级机构id",required = true,dataType = "int")
+    })
+    @PostMapping("/Delect_Organization/{ofcId}")
+    public Object Delect_Organization(@PathVariable int ofcId ){
+        Object object="";
+        int row=1;
+        if(row>0){
+            object="{\"flag\":\"删除成功\"}";
+        }else{
+            object="{\"flag\":\"删除失败\"}";
         }
         return object;
     }
