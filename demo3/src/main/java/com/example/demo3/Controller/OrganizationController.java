@@ -18,7 +18,7 @@ import java.util.List;
 public class OrganizationController {
     @Autowired
     private OrganizationService organizationService;
-    @ApiOperation(value = "机构添加",notes = "机构添加页信息（*号为必填项）",httpMethod = "GET",produces = MediaType.ALL_VALUE)
+    @ApiOperation(value = "机构添加",notes = "机构添加页信息（*号为必填项）",httpMethod = "POST",produces = MediaType.ALL_VALUE)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "ofcPrtNm",value = "上级机构",dataType = "String"),
             @ApiImplicitParam(name="cntrCd",value="国家代码",required = true,dataType = "int"),
@@ -39,7 +39,7 @@ public class OrganizationController {
             @ApiImplicitParam(name="ofcSpvsId",value="负责人",dataType = "String"),
     })
 
-    @GetMapping("/insert_Organization")
+    @PostMapping("/insert_Organization")
     public Object Insert_Organization(@RequestParam(required = false) String ofcPrtNm,
                                       @RequestParam int cntrCd,
                                       @RequestParam int stateCd,
@@ -84,9 +84,9 @@ public class OrganizationController {
         }
         return object;
     }
-    @ApiOperation(value = "机构修改",notes = "机构修改页信息",httpMethod = "GET",produces = MediaType.ALL_VALUE)
+    @ApiOperation(value = "机构修改",notes = "机构修改页信息",httpMethod = "PUT",produces = MediaType.ALL_VALUE)
     @ApiImplicitParam(name="ofcId",value="上级机构id",required = true,dataType = "int")
-    @GetMapping("/Update_Organization/{ofcId}")
+    @PutMapping("/Update_Organization/{ofcId}")
     public Object Update_Organization(
                                     @PathVariable("ofcId") int ofcId,
                                     Organization organization
@@ -100,12 +100,12 @@ public class OrganizationController {
         }
         return JSON.toJSONString(list);
     }
-    @ApiOperation(value = "机构模糊查询",notes = "机构模糊查询页信息（*号为必填项）",httpMethod = "POST",produces = MediaType.ALL_VALUE)
+    @ApiOperation(value = "机构模糊查询",notes = "机构模糊查询页信息（*号为必填项）",httpMethod = "GET",produces = MediaType.ALL_VALUE)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "ofcPrtNm", value = "上级机构",required = false,dataType = "String"),
             @ApiImplicitParam(name = "ofcCode", value = "机构编码", required = false,dataType = "int")
     })
-    @PostMapping("/Select_Organization")
+    @GetMapping("/Select_Organization")
     public Object Select_Organization(@RequestParam(required = false) String ofcPrtNm,
                                       @RequestParam(required = false,defaultValue = "0") int ofcCode){
         Organization organization=new Organization();
@@ -118,11 +118,11 @@ public class OrganizationController {
         List<Organization> list=organizationService.Select_O(organization);
         return JSON.toJSONString(list);
     }
-    @ApiOperation(value = "删除机构",notes = "删除机构根据机构id删除",httpMethod = "POST",produces = MediaType.ALL_VALUE)
+    @ApiOperation(value = "删除机构",notes = "删除机构根据机构id删除",httpMethod = "DELETE",produces = MediaType.ALL_VALUE)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "ofcId",value = "上级机构id",required = true,dataType = "int")
     })
-    @PostMapping("/Delect_Organization/{ofcId}")
+    @DeleteMapping("/Delect_Organization/{ofcId}")
     public Object Delect_Organization(@PathVariable int ofcId ){
         Organization organization=new Organization();
         organization.setOfcId(ofcId);
