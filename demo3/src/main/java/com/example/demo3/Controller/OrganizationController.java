@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Api(value = "Sample1",description = "机构管理范例相关接口",produces = MediaType.ALL_VALUE)
@@ -116,7 +117,10 @@ public class OrganizationController {
             organization.setOfcCode(ofcCode);
         }
         List<Organization> list=organizationService.Select_O(organization);
-        return JSON.toJSONString(list);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("total", 1);
+        map.put("list", list);
+        return JSON.toJSONString(map);
     }
     @ApiOperation(value = "删除机构",notes = "删除机构根据机构id删除",httpMethod = "POST",produces = MediaType.ALL_VALUE)
     @ApiImplicitParams({
