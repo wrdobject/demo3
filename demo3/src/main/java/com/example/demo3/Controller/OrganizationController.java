@@ -105,7 +105,7 @@ public class OrganizationController {
             @ApiImplicitParam(name = "ofcPrtNm", value = "上级机构",required = false,dataType = "String"),
             @ApiImplicitParam(name = "ofcCode", value = "机构编码", required = false,dataType = "int")
     })
-    @PostMapping("/Select_Organization")
+    @GetMapping("/Select_Organization")
     public Object Select_Organization(@RequestParam(required = false) String ofcPrtNm,
                                       @RequestParam(required = false,defaultValue = "0") int ofcCode){
         Organization organization=new Organization();
