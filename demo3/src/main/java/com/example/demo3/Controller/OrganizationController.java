@@ -1,16 +1,23 @@
 package com.example.demo3.Controller;
 
+import com.alibaba.fastjson.JSON;
 import com.example.demo3.Pojo.Organization;
+import com.example.demo3.Service.OrganizationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Api(value = "Sample1",description = "机构管理范例相关接口",produces = MediaType.ALL_VALUE)
 @RestController
 public class OrganizationController {
+    @Autowired
+    private OrganizationService organizationService;
     @ApiOperation(value = "机构添加",notes = "机构添加页信息（*号为必填项）",httpMethod = "GET",produces = MediaType.ALL_VALUE)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "ofcPrtNm",value = "上级机构",dataType = "String"),
@@ -51,7 +58,25 @@ public class OrganizationController {
                                       @RequestParam(required = false) String ofcFax,
                                       @RequestParam(required = false) String ofcSpvsId){
         Object object="";
-        int row=1;
+        Organization organization=new Organization();
+        organization.setAcctOfcId(acctOfcId);
+        organization.setAcctStdId(acctStdId);
+        organization.setCityCd(cityCd);
+        organization.setCntrCd(cntrCd);
+        organization.setFstCntctPersId(fstCntctPersId);
+        organization.setOfcAddr(ofcAddr);
+        organization.setOfcCode(ofcCode);
+        organization.setOfcFax(ofcFax);
+        organization.setOfcGrd(ofcGrd);
+        organization.setOfcNm(ofcNm);
+        organization.setOfcPrtNm(ofcPrtNm);
+        organization.setOfcSpvsId(ofcSpvsId);
+        organization.setOfcTel(ofcTel);
+        organization.setOfcType(ofcType);
+        organization.setOfcZip(ofcZip);
+        organization.setSecCntctPersId(secCntctPersId);
+        organization.setStateCd(stateCd);
+        int row=organizationService.Insert_O(organization);
         if(row>0){
             object="{\"flag\":\"添加成功\"}";
         }else{
@@ -63,17 +88,17 @@ public class OrganizationController {
     @ApiImplicitParam(name="ofcId",value="上级机构id",required = true,dataType = "int")
     @GetMapping("/Update_Organization/{ofcId}")
     public Object Update_Organization(
-                                    @PathVariable("ofcId") String ofcId,
+                                    @PathVariable("ofcId") int ofcId,
                                     Organization organization
                                     ){
-        Object object="";
-        int row=1;
+        System.out.println(organization.getCityCd());
+        organization.setOfcId(ofcId);
+        int row=organizationService.Update_O(organization);
+        List<Organization> list=null;
         if(row>0){
-            object="{\"flag\":\"修改成功\"}";
-        }else{
-            object="{\"flag\":\"修改失败\"}";
+            list=organizationService.Select_O(organization);
         }
-        return object;
+        return JSON.toJSONString(list);
     }
     @ApiOperation(value = "机构模糊查询",notes = "机构模糊查询页信息（*号为必填项）",httpMethod = "POST",produces = MediaType.ALL_VALUE)
     @ApiImplicitParams({
@@ -83,14 +108,15 @@ public class OrganizationController {
     @PostMapping("/Select_Organization")
     public Object Select_Organization(@RequestParam(required = false) String ofcPrtNm,
                                       @RequestParam(required = false,defaultValue = "0") int ofcCode){
-        Object object="";
-        int row=1;
-        if(row>0){
-            object="{\"flag\":\"查询结果显示\"}";
-        }else{
-            object="{\"flag\":\"查询失败\"}";
+        Organization organization=new Organization();
+        if(ofcPrtNm !=null){
+            organization.setOfcPrtNm(ofcPrtNm);
         }
-        return object;
+        if(ofcCode>0){
+            organization.setOfcCode(ofcCode);
+        }
+        List<Organization> list=organizationService.Select_O(organization);
+        return JSON.toJSONString(list);
     }
     @ApiOperation(value = "删除机构",notes = "删除机构根据机构id删除",httpMethod = "POST",produces = MediaType.ALL_VALUE)
     @ApiImplicitParams({
@@ -98,8 +124,10 @@ public class OrganizationController {
     })
     @PostMapping("/Delect_Organization/{ofcId}")
     public Object Delect_Organization(@PathVariable int ofcId ){
+        Organization organization=new Organization();
+        organization.setOfcId(ofcId);
         Object object="";
-        int row=1;
+        int row=organizationService.Delete_O(organization);
         if(row>0){
             object="{\"flag\":\"删除成功\"}";
         }else{

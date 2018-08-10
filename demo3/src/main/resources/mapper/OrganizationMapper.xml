@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo3.Mapper.OrganizationMapper">
+    <insert id="Insert_O" parameterType="organization">
+
+INSERT INTO skill.organization
+	(
+	ofcPrtNm,
+	cntrCd,
+	stateCd,
+	cityCd,
+	ofcNm,
+	ofcCode,
+	ofcType,
+	ofcGrd,
+	fstCntctPersId,
+	secCntctPersId,
+	acctOfcId,
+	acctStdId,
+	ofcAddr,
+	ofcTel,
+	ofcZip,
+	ofcFax,
+	ofcSpvsId
+	)
+	VALUES
+	(
+	#{ofcPrtNm},
+	#{cntrCd},
+	#{stateCd},
+	#{cityCd},
+	#{ofcNm},
+	#{ofcCode},
+	#{ofcType},
+	#{ofcGrd},
+	#{fstCntctPersId},
+	#{secCntctPersId},
+	#{acctOfcId},
+	#{acctStdId},
+	#{ofcAddr},
+	#{ofcTel},
+	#{ofcZip},
+	#{ofcFax},
+	#{ofcSpvsId}
+	)
+    </insert>
+    <select id="Select_O" resultType="Organization" parameterType="Organization">
+        SELECT * FROM organization
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="ofcPrtNm != null">
+                AND ofcPrtNm LIKE CONCAT('%',#{ofcPrtNm},'%')
+            </if>
+            <if test="ofcCode>0">
+                AND ofcCode LIKE CONCAT('%',#{ofcCode},'%')
+            </if>
+        </trim>
+    </select>
+    <delete id="Delete_O" parameterType="Organization">
+        DELETE FROM skill.organization
+	    WHERE
+	    ofcId = #{ofcId}
+	</delete>
+    <update id="Update_O" parameterType="Organization">
+
+UPDATE skill.organization
+    <trim prefix="SET" suffixOverrides=",">
+        <if test="ofcPrtNm != null">
+            ofcPrtNm = #{ofcPrtNm},
+        </if>
+        <if test="cntrCd>0">
+            cntrCd = #{cntrCd},
+        </if>
+        <if test="stateCd > 0">
+            stateCd = #{stateCd} ,
+        </if>
+        <if test="cityCd > 0">
+            cityCd = #{cityCd} ,
+        </if>
+        <if test="ofcNm != null">
+            ofcNm = #{ofcNm},
+        </if>
+        <if test="ofcCode>0">
+            ofcCode = #{ofcCode} ,
+        </if>
+        <if test="ofcType != null">
+            ofcType = #{ofcType} ,
+        </if>
+        <if test="ofcGrd != null">
+            ofcGrd = #{ofcGrd},
+        </if>
+        <if test="fstCntctPersId != null">
+            fstCntctPersId = #{fstCntctPersId} ,
+        </if>
+        <if test="secCntctPersId != null">
+            secCntctPersId = #{secCntctPersId},
+        </if>
+        <if test="acctOfcId != null">
+            acctOfcId = #{acctOfcId} ,
+        </if>
+        <if test="acctStdId != null">
+            acctStdId = #{acctStdId} ,
+        </if>
+        <if test="ofcAddr != null">
+            ofcAddr = #{ofcAddr} ,
+        </if>
+        <if test="ofcTel != null">
+            ofcTel = #{ofcTel} ,
+        </if>
+        <if test="ofcZip != null">
+            ofcZip = #{ofcZip} ,
+        </if>
+        <if test="ofcFax != null">
+            ofcFax = #{ofcFax},
+        </if>
+        <if test="ofcSpvsId != null">
+            ofcSpvsId = #{ofcSpvsId}
+        </if>
+    </trim>
+	WHERE
+	ofcId = #{ofcId}
+    </update>
+</mapper>
