@@ -66,11 +66,11 @@ public class FlightsController {
         }
         return object;
     }
-    @ApiOperation(value = "删除航班信息",notes = "删除页信息",httpMethod = "DELETE",produces = MediaType.ALL_VALUE)
+    @ApiOperation(value = "删除航班信息",notes = "删除页信息",httpMethod = "POST",produces = MediaType.ALL_VALUE)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id",value = "航班id",required = true,dataType = "int"),
     })
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     public Object DeleteById(@RequestParam int id){
         Object object="";
         Flights flights=new Flights();
@@ -83,7 +83,7 @@ public class FlightsController {
         }
         return object;
     }
-    @ApiOperation(value = "修改航班信息",notes = "修改页信息",httpMethod = "PUT",produces = MediaType.ALL_VALUE)
+    @ApiOperation(value = "修改航班信息",notes = "修改页信息",httpMethod = "POST",produces = MediaType.ALL_VALUE)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id",value = "航班id",required = true,dataType = "int"),
             @ApiImplicitParam(name = "flight_code",value = "航班编号",dataType = "String"),
@@ -93,7 +93,7 @@ public class FlightsController {
             @ApiImplicitParam(name = "take_airport_id",value = "起飞机场（外键）",dataType = "int"),
             @ApiImplicitParam(name = "landing_airport_id",value = "降落机场（外键）",dataType = "int")
     })
-    @PutMapping("/update")
+    @PostMapping("/update")
     public Object UpdateById(@RequestParam int id,
                             @RequestParam(required = false) String flight_code,
                              //@RequestParam(defaultValue = "2018-08-08") Date flight_date,

@@ -19,7 +19,7 @@ import java.util.List;
 public class OrganizationController {
     @Autowired
     private OrganizationService organizationService;
-    @ApiOperation(value = "机构添加",notes = "机构添加页信息（*号为必填项）",httpMethod = "POST",produces = MediaType.ALL_VALUE)
+    @ApiOperation(value = "机构添加",notes = "机构添加页信息（*号为必填项）",httpMethod = "GET",produces = MediaType.ALL_VALUE)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "ofcPrtNm",value = "上级机构",dataType = "String"),
             @ApiImplicitParam(name="cntrCd",value="国家代码",required = true,dataType = "int"),
@@ -40,7 +40,7 @@ public class OrganizationController {
             @ApiImplicitParam(name="ofcSpvsId",value="负责人",dataType = "String"),
     })
 
-    @PostMapping("/insert_Organization")
+    @GetMapping("/insert_Organization")
     public Object Insert_Organization(@RequestParam(required = false) String ofcPrtNm,
                                       @RequestParam int cntrCd,
                                       @RequestParam int stateCd,
@@ -92,6 +92,7 @@ public class OrganizationController {
                                     @PathVariable("ofcId") int ofcId,
                                     Organization organization
                                     ){
+        System.out.println(ofcId);
         System.out.println(organization.getCityCd());
         organization.setOfcId(ofcId);
         int row=organizationService.Update_O(organization);
@@ -101,12 +102,12 @@ public class OrganizationController {
         }
         return JSON.toJSONString(list);
     }
-    @ApiOperation(value = "机构模糊查询",notes = "机构模糊查询页信息（*号为必填项）",httpMethod = "GET",produces = MediaType.ALL_VALUE)
+    @ApiOperation(value = "机构模糊查询",notes = "机构模糊查询页信息（*号为必填项）",httpMethod = "POST",produces = MediaType.ALL_VALUE)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "ofcPrtNm", value = "上级机构",required = false,dataType = "String"),
             @ApiImplicitParam(name = "ofcCode", value = "机构编码", required = false,dataType = "int")
     })
-    @GetMapping("/Select_Organization")
+    @PostMapping("/Select_Organization")
     public Object Select_Organization(@RequestParam(required = false) String ofcPrtNm,
                                       @RequestParam(required = false,defaultValue = "0") int ofcCode){
         Organization organization=new Organization();

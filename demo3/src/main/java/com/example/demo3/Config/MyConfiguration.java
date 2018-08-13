@@ -11,6 +11,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class MyConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addCorsMappings(CorsRegistry registry){
-     registry.addMapping("/**").allowedMethods("*").allowedOrigins("*").allowedHeaders("*");
- }
+        registry.addMapping("/**").allowedMethods("*").allowedOrigins("*").allowedHeaders("*");
+    }
 }
